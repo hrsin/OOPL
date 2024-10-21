@@ -8,14 +8,13 @@ public class TODO {
     private DefaultListModel<String> taskListModel;
     private JList<String> todoList;
     private JTextField todoInput;
-    private JButton addButton;
+    private JButton addButton, removeButton;
 
     public TODO() {
         frame = new JFrame("To-do List");
         frame.setDefaultCloseOperation(3);
-        frame.setSize(400, 400);
+        frame.setSize(600, 600);
         frame.setLayout(new BorderLayout());
-        frame.setVisible(true);
 
         taskListModel = new DefaultListModel<>();
         todoList = new JList<>(taskListModel);
@@ -25,11 +24,14 @@ public class TODO {
         todoInput.setPreferredSize(new Dimension(300, 30));
 
         addButton = new JButton("Add");
+        removeButton = new JButton("Remove");
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new FlowLayout());
         mainPanel.add(todoInput);
         mainPanel.add(addButton);
+        mainPanel.add(removeButton);
+        frame.setVisible(true);
 
         frame.add(taskScroll, BorderLayout.CENTER);
         frame.add(mainPanel, BorderLayout.NORTH);
@@ -43,6 +45,16 @@ public class TODO {
                 }
             }
         });
+
+        removeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int selectedIndex = todoList.getSelectedIndex();
+                if (selectedIndex != -1) {
+                    taskListModel.remove(selectedIndex);
+                }
+            }
+        });
+
     }
 
     public static void main(String[] args) {
